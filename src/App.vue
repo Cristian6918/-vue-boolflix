@@ -1,19 +1,27 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <MainComponent :apiURL='apiUrl'/>
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import MainComponent from '@/components/MainComponent.vue';
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data(){
+    return{
+      apiUrl: 'https://api.themoviedb.org/3/search/',
+    }
+  },
+  components:{
+    MainComponent,
+  },
+  
+
+
   }
-}
+
 </script>
 
 <style lang="scss">
@@ -23,6 +31,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
