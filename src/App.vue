@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <MainComponent :apiURL='apiUrl'/>
+    <SearchPage :apiURL='apiUrl'/>
     
   </div>
 </template>
 
 <script>
-import MainComponent from '@/components/MainComponent.vue';
+import SearchPage from '@/components/SearchPage.vue';
 export default {
   name: 'App',
   data(){
@@ -15,7 +15,7 @@ export default {
     }
   },
   components:{
-    MainComponent,
+    SearchPage,
   },
   
 
@@ -25,6 +25,11 @@ export default {
 </script>
 
 <style lang="scss">
+*{
+  color:white;
+  margin:0;
+  box-sizing: border-box;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
