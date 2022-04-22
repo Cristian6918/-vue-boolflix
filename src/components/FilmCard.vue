@@ -3,6 +3,10 @@
       <img :src='poster' :alt="title">
       <div class="card-overlay">
           <h3>{{title}}</h3>
+          <p>Titolo originale: {{originalTitle}}</p>
+          <p>Lingua originale: {{language}}</p>
+          <p>Voto: {{vote}}</p>
+          <p>Overview: {{overview}}</p>
       </div>
   </div>
 </template>
@@ -15,7 +19,7 @@ export default {
         }
     },
     props:
-        ['poster' ,'id', 'title' ,'vote']
+        ['poster' ,'id', 'title' ,'vote','originalTitle','language','overview']
     
 
 }
@@ -23,36 +27,47 @@ export default {
 
 <style lang='scss' scoped>
 .ct-card{
+    max-height: 100%;
     position:relative;
   width: 200px;
+  border-radius: 10px;
   transition: transform 0.5s ease-out ;
         img{
             width:100%;
+            border-radius: 10px;
            
         }
 }
 .ct-card:hover{
     transform: scale(1.1);
-    transform-origin: top;
     z-index:1;
     
 }
 .card-overlay{
-display: flex;
-align-content:center;
-justify-content:center;
+opacity:0;
 position: absolute;
 left: 0%;
 right: 0%;
-top: 62.5%;
+top:90%;
 bottom: 0%;
-background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.925) 100%);
-transition: all 0.5s ease-out;
+border-radius:10px;
+background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
+transition:  0.5s ease-out;
 
+        h3{
+            text-align:center;
+            
+        }
+        p{
+            margin:5px 0px;
+            text-align:left;
+        }
    
 }
  .ct-card:hover .card-overlay{
+        opacity:1;
         top:0%;
+        transform-origin:bottom;
         background: linear-gradient(180deg, rgba(0, 0, 0, 0.699) 0%, rgb(0, 0, 0) 100%);
     }
 

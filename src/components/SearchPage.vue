@@ -12,7 +12,14 @@
     </header>
 
     <main>
-          <FilmCard  v-for='film in films '  :key='film.id' :title='control(film)' :poster='getPoster(film.poster_path)'/>
+          <FilmCard  v-for='film in films ' 
+           :key='film.id'
+           :title='control(film)' 
+           :poster='getPoster(film.poster_path)'
+           :originalTitle="controlOrginalTitle(film)"
+           :language='film.original_language'
+           :vote='film.vote_average'
+           />
     </main>
      
      
@@ -75,6 +82,14 @@ export default {
       }
     },
 
+    controlOrginalTitle:function(film){
+      if(film.original_title){
+        return film.original_title
+      }else{
+        return film.original_name
+      }
+    },
+
     getPoster(poster="",size='w342'){
       if(poster!=null){
         return `https://image.tmdb.org/t/p/${size}${poster}`
@@ -133,6 +148,7 @@ main{
   flex-wrap:wrap;
   justify-content: center;
   gap: 20px;
+  padding:20px;
   
 }
 
