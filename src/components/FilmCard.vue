@@ -4,7 +4,8 @@
       <div class="card-overlay">
           <h3>{{title}}</h3>
           <p>Titolo originale: {{originalTitle}}</p>
-          <p>Lingua originale: {{language}}</p>
+          <p>Lingua originale:{{language}}    </p>
+         
           <p>Voto: {{vote}}</p>
           <p>Overview: {{overview}}</p>
       </div>
@@ -12,6 +13,7 @@
 </template>
 
 <script>
+
 export default {
     data(){
         return{
@@ -19,9 +21,10 @@ export default {
         }
     },
     props:
-        ['poster' ,'id', 'title' ,'vote','originalTitle','language','overview']
-    
-
+        ['poster' ,'id', 'title' ,'vote','originalTitle','language','overview'],
+    components:{
+        
+    },
 }
 </script>
 

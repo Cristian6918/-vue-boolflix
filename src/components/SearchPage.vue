@@ -17,7 +17,7 @@
            :title='control(film)' 
            :poster='getPoster(film.poster_path)'
            :originalTitle="controlOrginalTitle(film)"
-           :language='film.original_language'
+           :language='getFlagEmoji(film.original_language)'
            :vote='film.vote_average'
            />
     </main>
@@ -29,6 +29,7 @@
 <script>
 import FilmCard from '@/components/FilmCard.vue';
 import axios from 'axios';
+
 
 
 export default {
@@ -44,7 +45,8 @@ export default {
         }
     },
     components:{
-        FilmCard
+        FilmCard,
+        
     },
     props:{
         apiURL:String
@@ -97,8 +99,20 @@ export default {
       else{
         return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoWcWg0E8pSjBNi0TtiZsqu8uD2PAr_K11DA&usqp=CAU"
       }
-      
-    }
+    },
+//Show Flags on FireFox!
+    getFlagEmoji(countryCode) {
+      if(countryCode==='en'){
+        countryCode='gb'
+      } 
+  const codePoints = countryCode
+    .toUpperCase()
+    .split('')
+    .map(char =>  127397 + char.charCodeAt());
+  return String.fromCodePoint(...codePoints);
+}
+  
+  
 
     
     
