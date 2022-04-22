@@ -2,12 +2,12 @@
   <div class='container'>
     <header>
       <div class="search-section">
-        <input  v-model='query' @keyup="queryApi(query.trim())" >
+        <input  v-model='query' @keyup="queryApi(query.trim()); resetPage()" >
         <span  style='cursor:default;' >Search</span>
         </div>
       <div class="ct-type-section">
-        <button  @click='isMovie=true ; queryApi(query.trim()) ' >Movies</button>
-        <button  @click='isMovie=false ; queryApi(query.trim())'>Tv</button>
+        <button  @click='isMovie=true ; queryApi(query.trim()); resetPage() ' >Movies</button>
+        <button  @click='isMovie=false ; queryApi(query.trim())  ;resetPage()'>Tv Show</button>
       </div>
     </header>
 
@@ -18,9 +18,16 @@
            :poster='getPoster(film.poster_path)'
            :originalTitle="controlOrginalTitle(film)"
            :language='getFlagEmoji(film.original_language)'
-           :vote='film.vote_average'
+           :vote='starReturn(film.vote_average)'
+           :overview="film.overview"
            />
     </main>
+           <div class="button-section">
+              <button @click='prevPage() ; queryApi(query) ' v-if='page>1' >prev</button>
+              <button @click='nextPage() ; queryApi(query) ' >next</button>
+          </div>
+    
+    
      
      
   </div>
@@ -30,7 +37,7 @@
 import FilmCard from '@/components/FilmCard.vue';
 import axios from 'axios';
 
-
+// :vote='starReturn(film.vote_average)'
 
 export default {
     data(){
@@ -39,7 +46,8 @@ export default {
             apiKey:'0b98e663444d090f1590b649dc04a365',
             query:'',
             isMovie:true,
-            emptyPoster:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc3axCUQM3JAxoNSab8AbCUlfZQLE0UFtb6Q&usqp=CAU'
+            emptyPoster:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc3axCUQM3JAxoNSab8AbCUlfZQLE0UFtb6Q&usqp=CAU',
+            page:1
             
           
         }
@@ -56,14 +64,16 @@ export default {
             if(text.length!=0){
                 let searchType=this.isMovie===true? 'movie':'tv';
                 const params={
+                  page:this.page,
                   query:text,
                   api_key:this.apiKey,
                   language:'it-IT',
+                  adult:true
                 }
                 axios.get(this.apiURL + searchType, {params}).then((response)=>{
-                  console.log(response);
                   if(response.status===200){
                   this.films=response.data.results;
+                  response.data.page=this.page;
                   console.log(this.films);
                   }
                   })
@@ -110,6 +120,34 @@ export default {
     .split('')
     .map(char =>  127397 + char.charCodeAt());
   return String.fromCodePoint(...codePoints);
+},
+
+starReturn(vote){
+  let arrayStar=[];
+  let rating=vote/2;
+  rating= Math.ceil(rating);
+  for(let i=0; i<5;i++){
+    if(i<rating){
+      arrayStar.push('full')
+    }else{
+      arrayStar.push('empty');
+    }
+  }
+  
+  return arrayStar;
+},
+
+nextPage:function(){
+  this.page+=1;
+ 
+},
+prevPage:function(){
+  this.page-=1;
+ 
+},
+
+resetPage(){
+  this.page=1;
 }
   
   
@@ -163,6 +201,8 @@ main{
   justify-content: center;
   gap: 20px;
   padding:20px;
+
+    
   
 }
 
@@ -190,5 +230,11 @@ button{
       color:black; 
      
     }
+
+      .button-section{
+        display:flex;
+        justify-content:center;
+        gap:100px;
+      }
 
 </style>
