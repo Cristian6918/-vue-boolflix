@@ -38,7 +38,7 @@ export default {
 .ct-card{
     max-height: 100%;
     position:relative;
-  width: 200px;
+  width: 150px;
   border-radius: 10px;
   transition: transform 0.5s ease-out ;
 //   transition-delay:1s;

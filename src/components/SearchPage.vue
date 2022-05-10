@@ -3,7 +3,8 @@
     <header>
       <div class="search-section">
         <input  v-model='query' @keyup="queryApi(query.trim()); resetPage()" >
-        <span  style='cursor:default;' >Search</span>
+        <span  style='cursor:default;' ><span ><i class="fa-solid fa-magnifying-glass"></i></span></span>
+        <span class="close-button" @click="onClickButton"><i class="fa-solid fa-xmark"></i></span>
         </div>
       <div class="ct-type-section">
         <button  @click='isMovie=true ; queryApi(query.trim()); resetPage() ' >Movies</button>
@@ -24,7 +25,7 @@
     </main>
            <div class="button-section">
               <button @click='prevPage() ; queryApi(query) ' v-if='page>1' >prev</button>
-              <button @click='nextPage() ; queryApi(query) ' >next</button>
+              <button @click='nextPage() ; queryApi(query) ' v-if='films.length > 0 && films.length==20 ' >next</button>
           </div>
     
     
@@ -134,21 +135,23 @@ starReturn(vote){
     }
   }
   
-  return arrayStar;
-},
+    return arrayStar;
+  },
 
-nextPage:function(){
-  this.page+=1;
- 
-},
-prevPage:function(){
-  this.page-=1;
- 
-},
+  nextPage:function(){
+    this.page+=1;
+  },
+  prevPage:function(){
+    this.page-=1;
+  },
 
-resetPage(){
-  this.page=1;
-}
+  resetPage(){
+    this.page=1;
+  },
+
+  onClickButton () {
+     this.$emit('clicked', false)
+  }
   
   
 
@@ -170,11 +173,17 @@ resetPage(){
 
 <style lang='scss' scoped>
 .container{
+  position:absolute;
+  top:0;
+  left:0;
   display:flex;
   flex-direction: column;
- 
+  width:100%;
   min-height: 100vh;
-  background-color:rgba(0, 0, 0, 0.493);
+  background-color:rgba(0, 0, 0, 0.904);
+  z-index:99
+  
+  
 }
 
 header{
@@ -191,6 +200,13 @@ header{
       display:flex;
       gap:20px;
       align-items: center;
+    }
+    .search-section{
+      .close-button{
+        position:absolute;
+       right:20px;
+       font-size:2rem;
+      }
     }
 }
 
@@ -215,6 +231,7 @@ input{
   outline: none;
   background-color:#FFFFFF;
   
+  
 }
 button{
   border:none;
@@ -228,6 +245,8 @@ button{
 .search-button{
       background-color:#FFFFFF;
       color:black; 
+
+
      
     }
 
